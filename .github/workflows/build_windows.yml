@@ -15,10 +15,9 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: "3.35.2"
           cache: false
 
-      - name: Flutter Version
+      - name: Flutter Version Check
         run: |
           flutter --version
           dart --version
