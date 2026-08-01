@@ -35,7 +35,7 @@ dependencies:
 
   # PDF rapor olusturma + onizleme/paylasim/yazdirma
   pdf: ^3.12.0
-  printing: ^5.13.1
+  printing: printing: ^5.13.1
 
   # ESC/POS termal fis
   esc_pos_utils_plus: ^2.0.4
@@ -49,10 +49,10 @@ dependencies:
   phone_state: ^2.1.1
   permission_handler: ^11.4.0
 
-  # Yerel ag (LAN) ve Sunucu
+  # Yerel ag (LAN) ve Sunucu (Uyumlu modern sürümler)
   shelf: ^1.4.1
   shelf_router: ^1.1.4
-  shelf_web_socket: ^1.0.4
+  shelf_web_socket: ^3.0.0
   web_socket_channel: ^3.0.3
   network_info_plus: ^5.0.3
   http: ^1.2.0
