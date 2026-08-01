@@ -10,50 +10,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Flutter SDK
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.35.2"
-          channel: stable
-          cache: false
-
-      - name: Flutter Info Check
-        shell: pwsh
-        run: |
-          where.exe flutter
-          flutter --version
-          dart --version
-
-      - name: Enable Windows Desktop
-        run: flutter config --enable-windows-desktop
-
-      - name: Debug Repository
+      - name: Show pubspec
         shell: pwsh
         run: |
           Write-Host "===== COMMIT ====="
           git rev-parse HEAD
 
-          Write-Host "===== FILES ====="
-          Get-ChildItem -Recurse -Filter pubspec.yaml | Select-Object FullName
+          Write-Host "===== NETWORK INFO ====="
+          Select-String -Path pubspec.yaml -Pattern "network_info_plus"
 
-          Write-Host "===== PUBSPEC ====="
-          Get-Content pubspec.yaml
+          Write-Host "===== SHARE PLUS ====="
+          Select-String -Path pubspec.yaml -Pattern "share_plus"
 
-          Write-Host "===== OVERRIDES ====="
-          if (Test-Path pubspec_overrides.yaml) {
-            Get-Content pubspec_overrides.yaml
-          } else {
-            Write-Host "No pubspec_overrides.yaml"
-          }
+          Write-Host "===== PRINT BT ====="
+          Select-String -Path pubspec.yaml -Pattern "print_bluetooth_thermal"
 
-      - name: Get Dependencies
-        run: flutter pub get
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.44.1"
+          channel: stable
+          cache: false
 
-      - name: Build Windows Release
-        run: flutter build windows --release
+      - name: Flutter Info
+        run: |
+          flutter --version
+          dart --version
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - run: flutter config --enable-windows-desktop
+
+      - run: flutter clean
+
+      - run: flutter pub get
+
+      - run: flutter build windows --release
+
+      - uses: actions/upload-artifact@v4
         with:
           name: tezgah_pos_windows
           path: build/windows/x64/runner/Release
