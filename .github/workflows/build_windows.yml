@@ -10,22 +10,36 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Flutter SDK Temiz Kurulumu
+      - name: Flutter SDK Kur
         shell: pwsh
         run: |
           git clone https://github.com/flutter/flutter.git -b stable --depth 1 C:\flutter
-          echo "C:\flutter\bin" >> $env:GITHUB_PATH
 
-      - name: Flutter Yapilandirmasi
-        run: |
+          echo "C:\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+          $env:PATH="C:\flutter\bin;$env:PATH"
+
+          where.exe flutter
           flutter --version
+          dart --version
+
+      - name: Flutter Yapılandır
+        shell: pwsh
+        run: |
+          $env:PATH="C:\flutter\bin;$env:PATH"
           flutter config --enable-windows-desktop
 
-      - name: Bagimliliklari Yukle
-        run: flutter pub get
+      - name: Pub Get
+        shell: pwsh
+        run: |
+          $env:PATH="C:\flutter\bin;$env:PATH"
+          flutter pub get
 
-      - name: Windows EXE Derle
-        run: flutter build windows --release
+      - name: Windows Build
+        shell: pwsh
+        run: |
+          $env:PATH="C:\flutter\bin;$env:PATH"
+          flutter build windows --release
 
       - uses: actions/upload-artifact@v4
         with:
