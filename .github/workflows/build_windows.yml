@@ -14,7 +14,7 @@ jobs:
       - name: Flutter'ı Kur
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.0'
+          flutter-version: '3.27.1' # Dart SDK uyumu için güncel sürüm
           channel: 'stable'
 
       - name: Bağımlılıkları Yükle
