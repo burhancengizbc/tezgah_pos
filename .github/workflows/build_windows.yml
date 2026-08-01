@@ -10,41 +10,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Show pubspec
+      - name: Install Flutter 3.44.1
         shell: pwsh
         run: |
-          Write-Host "===== COMMIT ====="
-          git rev-parse HEAD
-
-          Write-Host "===== NETWORK INFO ====="
-          Select-String -Path pubspec.yaml -Pattern "network_info_plus"
-
-          Write-Host "===== SHARE PLUS ====="
-          Select-String -Path pubspec.yaml -Pattern "share_plus"
-
-          Write-Host "===== PRINT BT ====="
-          Select-String -Path pubspec.yaml -Pattern "print_bluetooth_thermal"
-
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: "3.44.1"
-          channel: stable
-          cache: false
+          git clone https://github.com/flutter/flutter.git C:\flutter
+          cd C:\flutter
+          git checkout 3.44.1
+          echo "C:\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Flutter Info
+        shell: pwsh
         run: |
           flutter --version
           dart --version
 
-      - run: flutter config --enable-windows-desktop
+      - name: Enable Windows
+        run: flutter config --enable-windows-desktop
 
-      - run: flutter clean
+      - name: Clean
+        run: flutter clean
 
-      - run: flutter pub get
+      - name: Get Dependencies
+        run: flutter pub get
 
-      - run: flutter build windows --release
+      - name: Build
+        run: flutter build windows --release
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload
+        uses: actions/upload-artifact@v4
         with:
           name: tezgah_pos_windows
           path: build/windows/x64/runner/Release
