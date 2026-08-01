@@ -27,6 +27,14 @@ jobs:
       - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
+      - name: Debug pubspec
+        shell: pwsh
+        run: |
+          Write-Host "--- GIT COMMIT HASH ---"
+          git rev-parse HEAD
+          Write-Host "--- PUBSPEC.YAML CONTENT ---"
+          Get-Content pubspec.yaml
+
       - name: Get Dependencies
         run: flutter pub get
 
