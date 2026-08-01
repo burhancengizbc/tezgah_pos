@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/collections/people_collections.dart';
-import '../../data/enums/app_enums.dart'; // EKLENDİ (EmployeeRole için)
+import '../../data/enums/app_enums.dart'; 
 
 // O an cihaza PIN girerek oturum açmış olan personeli tutar
 final currentEmployeeProvider = StateProvider<Employee?>((ref) => null);
