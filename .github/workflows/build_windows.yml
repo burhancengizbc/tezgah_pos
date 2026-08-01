@@ -27,13 +27,24 @@ jobs:
       - name: Enable Windows Desktop
         run: flutter config --enable-windows-desktop
 
-      - name: Debug pubspec
+      - name: Debug Repository
         shell: pwsh
         run: |
-          Write-Host "--- GIT COMMIT HASH ---"
+          Write-Host "===== COMMIT ====="
           git rev-parse HEAD
-          Write-Host "--- PUBSPEC.YAML CONTENT ---"
+
+          Write-Host "===== FILES ====="
+          Get-ChildItem -Recurse -Filter pubspec.yaml | Select-Object FullName
+
+          Write-Host "===== PUBSPEC ====="
           Get-Content pubspec.yaml
+
+          Write-Host "===== OVERRIDES ====="
+          if (Test-Path pubspec_overrides.yaml) {
+            Get-Content pubspec_overrides.yaml
+          } else {
+            Write-Host "No pubspec_overrides.yaml"
+          }
 
       - name: Get Dependencies
         run: flutter pub get
