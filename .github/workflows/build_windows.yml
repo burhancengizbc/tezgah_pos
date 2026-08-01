@@ -15,7 +15,8 @@ jobs:
         run: |
           git clone https://github.com/flutter/flutter.git C:\flutter
           cd C:\flutter
-          git checkout 3.44.1
+          git fetch --tags
+          git checkout tags/3.44.1
           echo "C:\flutter\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Flutter Info
