@@ -8,28 +8,19 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Kodu Klonla
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Flutter SDK Kurulumu (Manuel)
-        shell: pwsh
-        run: |
-          git clone https://github.com/flutter/flutter.git -b master --depth 1 C:\flutter
-          echo "C:\flutter\bin" >> $env:GITHUB_PATH
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.8"
 
-      - name: Flutter Ortamını Ayarla
-        run: |
-          flutter --version
-          flutter config --enable-windows-desktop
+      - run: flutter config --enable-windows-desktop
 
-      - name: Bağımlılıkları Yükle
-        run: flutter pub get
+      - run: flutter pub get
 
-      - name: Windows (.exe) Derlemesi Al
-        run: flutter build windows --release
+      - run: flutter build windows --release
 
-      - name: Çıktıyı İndirilebilir Yap
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: tezgah_pos_windows
-          path: build\windows\x64\runner\Release
+          path: build/windows/x64/runner/Release
