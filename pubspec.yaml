@@ -49,12 +49,12 @@ dependencies:
   phone_state: ^3.0.1
   permission_handler: ^13.0.0
 
-  # Yerel ag (LAN) ve Sunucu
+ # Yerel ag (LAN) ve Sunucu
   shelf: ^1.4.1
   shelf_router: ^1.1.4
   shelf_web_socket: ^3.0.0
   web_socket_channel: ^3.0.3
-  network_info_plus: ^8.2.1
+  network_info_plus: ^5.0.3
   http: ^1.2.0
   shared_preferences: ^2.3.0
   url_launcher: ^6.3.0
