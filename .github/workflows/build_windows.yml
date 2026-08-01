@@ -1,0 +1,33 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Kodu Klonla
+        uses: actions/checkout@v3
+
+      - name: Flutter'ı Kur
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      - name: Bağımlılıkları Yükle
+        run: flutter pub get
+
+      - name: Windows Masaüstünü Aktifleştir
+        run: flutter config --enable-windows-desktop
+
+      - name: Windows (.exe) Derlemesi Al
+        run: flutter build windows --release
+
+      - name: Çıktıyı İndir
+        uses: actions/upload-artifact@v3
+        with:
+          name: tezgah_pos_windows
+          path: build/windows/x64/runner/Release
