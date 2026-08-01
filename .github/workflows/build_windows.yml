@@ -8,25 +8,35 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.2"
           channel: stable
+          flutter-version: "3.35.2"
+          cache: false
 
-      - name: Flutter Info
+      - name: Flutter Version
         run: |
           flutter --version
           dart --version
 
-      - run: flutter config --enable-windows-desktop
+      - name: Enable Windows Desktop
+        run: flutter config --enable-windows-desktop
 
-      - run: flutter pub get
+      - name: Clean Project
+        run: flutter clean
 
-      - run: flutter build windows --release
+      - name: Get Dependencies
+        run: flutter pub get
 
-      - uses: actions/upload-artifact@v4
+      - name: Build Windows
+        run: flutter build windows --release
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
         with:
           name: tezgah_pos_windows
           path: build/windows/x64/runner/Release
