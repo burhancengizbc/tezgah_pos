@@ -132,8 +132,8 @@ class LanServerService {
 
     // WebSocket: companion'lar (kurye) baglanir; sunucu olay yayinlar.
     final wsHandler = webSocketHandler((WebSocketChannel socket, String? protocol) {
-      _clients.add(socket);
-      socket.stream.listen(
+  _clients.add(socket);
+  socket.stream.listen(
         (data) {
           try {
             final msg = jsonDecode(data as String) as Map<String, dynamic>;
